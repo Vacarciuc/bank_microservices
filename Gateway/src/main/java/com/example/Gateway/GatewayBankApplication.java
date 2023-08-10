@@ -1,3 +1,8 @@
+/**
+ * Banking application
+ * Application created from microservices
+ *
+*/
 package com.example.Gateway;
 
 import org.springframework.boot.SpringApplication;

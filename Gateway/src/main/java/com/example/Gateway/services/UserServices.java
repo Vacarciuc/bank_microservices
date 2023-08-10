@@ -7,10 +7,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServices {
+    //using a default password because string contruction new object in heap, but I get char, and after I use, overwrite
+    final char[] DEFAULTPASS={'0', '0', '0', '0'};
+    public char[] getDEFAULTPASS() {
+        return DEFAULTPASS;
+    }
+
     @Autowired
     UserDAO userDAO;
 
-    public void saveUser(String email, String password, String firstName, String lastName){
+    public void saveUser(String email, char[] password, String firstName, String lastName){
         User user=new User();
         user.setEmail(email);
         user.setPassword(password);
@@ -18,12 +24,14 @@ public class UserServices {
         user.setLastName(lastName);
         userDAO.save(user);
     }
-    public boolean loginUser(String email, String password){
+    public boolean loginUser(String email, char[] password){
         User user=userDAO.findByEmail(email);
         if (user.getPassword().equals(password)){
+            user.setPassword(DEFAULTPASS);
             return true;
         }
         else{
+            user.setPassword(DEFAULTPASS);
             return false;
         }
     }
